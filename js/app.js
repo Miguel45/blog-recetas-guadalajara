@@ -55,7 +55,7 @@ async function loadPage (pageName) {
     })
   } catch (error) {
     console.error('Error loading page:', error)
-    //window.location.href = '404.html'
+    window.location.href = '404.html'
   }
 }
 
