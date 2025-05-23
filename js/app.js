@@ -40,7 +40,7 @@ function addToSearchHistory(term) {
 
 async function loadPage (pageName) {
   try {
-    const response = await fetch(`/blog-recetas-guadalajara/pages/${pageName}.md`)
+    const response = await fetch(`https://miguel45.github.io/blog-recetas-guadalajara/pages/${pageName}.md`)
     if (!response.ok) throw new Error('Página no encontrada')
 
     const markdown = await response.text()
@@ -55,7 +55,7 @@ async function loadPage (pageName) {
     })
   } catch (error) {
     console.error('Error loading page:', error)
-    window.location.href = '/blog-recetas-guadalajara/404.html'
+    window.location.href = '/404.html'
   }
 }
 
