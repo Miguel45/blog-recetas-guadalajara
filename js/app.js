@@ -14,18 +14,20 @@ async function buscar() {
   const searchTerm = document.getElementById('search-input').value.trim();
   const response = await fetch(`https://miguel45.github.io/blog-recetas-guadalajara/pages/list.json`)
   if (!response.ok) throw new Error('Página no encontrada')
-  console.log(response, searchTerm)
+  const data = await response.json()
+
+  console.log(data, searchTerm)
 }
 
 // Opcional: Búsqueda al presionar Enter
-document.getElementById('search-input').addEventListener('keypress', function(e) {
+document.getElementById('search-input').addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {
     buscar();
   }
 });
 
 
-async function loadPage (pageName) {
+async function loadPage(pageName) {
   try {
     const response = await fetch(`https://miguel45.github.io/blog-recetas-guadalajara/pages/${pageName}.md`)
     if (!response.ok) throw new Error('Página no encontrada')
@@ -46,7 +48,7 @@ async function loadPage (pageName) {
   }
 }
 
-async function renderMarkdown (markdown) {
+async function renderMarkdown(markdown) {
   const contentDiv = document.getElementById('content')
 
   // Primero renderizamos el Markdown
@@ -70,7 +72,7 @@ async function renderMarkdown (markdown) {
   })
 }
 
-function processMermaidDiagrams () {
+function processMermaidDiagrams() {
   return new Promise(resolve => {
     // Seleccionar todos los bloques de código con clase mermaid
     const mermaidElements = document.querySelectorAll(
