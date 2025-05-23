@@ -10,10 +10,11 @@ mermaid.initialize({
 })
 
 // Integración con tu función existente
-function buscar() {
+async function buscar() {
   const searchTerm = document.getElementById('search-input').value.trim();
-  
-  console.log(searchTerm)
+  const response = await fetch(`https://miguel45.github.io/blog-recetas-guadalajara/pages/list.json`)
+  if (!response.ok) throw new Error('Página no encontrada')
+  console.log(response, searchTerm)
 }
 
 // Opcional: Búsqueda al presionar Enter

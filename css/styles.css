@@ -87,12 +87,12 @@ body {
 }
 
 #search-input:focus {
-  border-color: #0066cc;
+  border-color: #7F1A5A60;
   box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
 }
 
 .navbar-search button {
-  background: #0066cc;
+  background: #7F1A5A60;
   color: white;
   border: none;
   padding: 8px 15px;
