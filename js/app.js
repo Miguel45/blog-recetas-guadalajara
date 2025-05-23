@@ -15,7 +15,7 @@ async function buscar() {
   const response = await fetch(`https://miguel45.github.io/blog-recetas-guadalajara/pages/list.json`)
   if (!response.ok) throw new Error('Página no encontrada')
   const data = await response.json()
-  const filteredItems = data.filter(e => e.name.trim().indexOf("searchTerm") !== -1)
+  const filteredItems = data.filter(e => e.name.trim().indexOf(searchTerm) !== -1)
   console.log(filteredItems)
 }
 
