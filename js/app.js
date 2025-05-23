@@ -13,13 +13,7 @@ mermaid.initialize({
 function buscar() {
   const searchTerm = document.getElementById('search-input').value.trim();
   
-  if (searchTerm) {
-    // Llama a tu función de búsqueda
-    window.buscar(searchTerm); // Asumiendo que buscar() está en el ámbito global
-    
-    // Opcional: Añadir a historial de búsquedas
-    addToSearchHistory(searchTerm);
-  }
+  console.log(searchTerm)
 }
 
 // Opcional: Búsqueda al presionar Enter
@@ -29,14 +23,6 @@ document.getElementById('search-input').addEventListener('keypress', function(e)
   }
 });
 
-// Ejemplo de función de historial (opcional)
-function addToSearchHistory(term) {
-  const history = JSON.parse(localStorage.getItem('searchHistory') || []);
-  if (!history.includes(term)) {
-    history.unshift(term);
-    localStorage.setItem('searchHistory', JSON.stringify(history.slice(0, 10)));
-  }
-}
 
 async function loadPage (pageName) {
   try {
