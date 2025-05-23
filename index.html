@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cocina En Guadalajara</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/swagger-ui.css">
+  <!-- Cargar Mermaid primero -->
+  <script src="/js/mermaid.min.js"></script>
+  <script src="/js/marked.min.js"></script>
+  <script src="/js/swagger-ui-bundle.js" defer></script>
+  <script src="/js/swagger-ui-standalone-preset.js" defer></script>
+  <script src="/js/sweetalert2@11.js" defer></script>
+  <script src="/js/app.js" defer></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a href="/" data-page="recetas">
+          <!--<img src="https://www.tsmart-tellink.com/static/media/tellink1920.72200e0acf7696d16706.png" alt="Tellink" class="navbar-logo">-->
+          <small>Cocina En</small> Guadalajara
+        </a>
+      </div>
+      <div class="navbar-search">
+        <input type="text" id="search-input" placeholder="Buscar documentación...">
+        <button onclick="buscar()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+      <ul class="navbar-nav">
+        <li><a href="/" data-page="historias">Historias</a></li>
+        
+        <!--<li><a href="/" data-page="diagramas">Diagramas</a></li>-->
+        <!--<li class="dropdown">
+          API Doc.
+          <ul class="dropdown-menu">
+            <li><a href="/" data-page="tsmart-api-swagger">tsmart-data-api</a></li>
+            <li><a href="/" data-page="tsmart-auth-api-swagger">tsmart-auth-api</a></li>-->
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Contenido dinámico -->
+    <main id="content" class="markdown-content"></main>
+  </div>
+
+  <script>
+    // Cargar la primera página al inicio
+    document.addEventListener( 'DOMContentLoaded', () =>
+    {
+      loadPage( 'pagina1' );
+
+      // Manejar clic en los enlaces del navbar
+      document.querySelectorAll( '.navbar-nav a' ).forEach( link =>
+      {
+        link.addEventListener( 'click', ( e ) =>
+        {
+          e.preventDefault();
+          const page = e.target.getAttribute( 'data-page' );
+          loadPage( page );
+          history.pushState( { page }, '', `?page=${ page }` );
+        } );
+      } );
+
+      // Manejar el botón atrás/adelante
+      window.addEventListener( 'popstate', ( e ) =>
+      {
+        if ( e.state && e.state.page ) {
+          loadPage( e.state.page );
+        } else {
+          loadPage( 'pagina1' );
+        }
+      } );
+    } );
+  </script>
+  <!-- Carga diferida de Swagger UI -->
+</body>
+
+</html>

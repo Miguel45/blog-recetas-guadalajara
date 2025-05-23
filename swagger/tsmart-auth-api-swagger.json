@@ -1,0 +1,330 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "version": "3.2.4",
+      "title": "tsmart-auth-api",
+      "description": "Documentation API-AUTH."
+   },
+   "servers": [
+      {
+         "url": "https://deb-tsmart-authentication-api.azurewebsites.net"
+      }
+   ],
+   "basePath": "/api",
+   "paths": {
+      "/api/auth": {
+         "post": {
+            "summary": "Autenticación de usuario",
+            "tags": [
+               "Autenticación"
+            ],
+            "description": "Autenticacion de usuario",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "format": "email",
+                              "description": "Correo electrónico del usuario."
+                           },
+                           "password": {
+                              "type": "string",
+                              "format": "password",
+                              "description": "Contraseña del usuario."
+                           }
+                        },
+                        "required": [
+                           "email",
+                           "password"
+                        ]
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Autenticación exitosa",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "integer",
+                                 "example": 19
+                              },
+                              "name": {
+                                 "type": "string",
+                                 "example": "Nombre de usuario"
+                              },
+                              "terms_of_use": {
+                                 "type": "integer",
+                                 "example": 1
+                              },
+                              "company": {
+                                 "type": "string",
+                                 "example": "Tellink"
+                              },
+                              "date": {
+                                 "type": "string",
+                                 "format": "date-time",
+                                 "example": "2024-07-18T12:47:41"
+                              },
+                              "last_ip": {
+                                 "type": "string",
+                                 "example": "14.155.204.106"
+                              },
+                              "token": {
+                                 "type": "string",
+                                 "example": "eyJhbGciO5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNzIxNjQ3NDQ0LCJleHAiOjE3MjE2NzYyNDQsImRhdGEiOnsiZW1haWwiOiJndWlsbGVybW8ubW9uZ3VpbGxvdEB0ZWxsaW5rc2lzdGVtYXMuY29tIiwiaWQiOjM3LCJuYW1lIjoiR3Wf4KoUwIrx4t9Y"
+                              },
+                              "contracts": {
+                                 "type": "array",
+                                 "description": "Array de contratos asociados al usuario. Incluye detalles sobre cada contrato.",
+                                 "items": {
+                                    "type": "object",
+                                    "properties": {
+                                       "id": {
+                                          "type": "integer",
+                                          "example": 5
+                                       },
+                                       "name": {
+                                          "type": "string",
+                                          "example": "Ejemplo1"
+                                       },
+                                       "permissions": {
+                                          "type": "string",
+                                          "example": "administrator"
+                                       },
+                                       "type": {
+                                          "type": "string",
+                                          "example": "P2P/CM"
+                                       },
+                                       "subcontract_id": {
+                                          "type": "string",
+                                          "example": ",,"
+                                       },
+                                       "boss": {
+                                          "type": "integer",
+                                          "example": 0
+                                       },
+                                       "operator": {
+                                          "type": "integer",
+                                          "example": 0
+                                       },
+                                       "person_in_charge": {
+                                          "type": "integer",
+                                          "example": 0
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Fallo de autenticación",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "code": {
+                                 "type": "integer",
+                                 "example": 401
+                              },
+                              "name": {
+                                 "type": "string",
+                                 "example": "Authentication Fail"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Error interno del servidor o error en el usuario",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "error": {
+                                 "type": "string",
+                                 "example": "FATAL ERROR"
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/api/auth/2fa": {
+         "post": {
+            "summary": "Autenticación de usuario",
+            "tags": [
+               "Autenticación"
+            ],
+            "description": "Maneja tanto la autenticación de primer factor como la autenticación de segundo factor. Dependiendo del estado del usuario y la IP desde la que se realiza la solicitud, se puede requerir una verificación adicional mediante un codigo enviado a la dirección de correo electrónico.",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "format": "email",
+                              "description": "Correo electrónico del usuario."
+                           },
+                           "password": {
+                              "type": "string",
+                              "format": "password",
+                              "description": "Contraseña del usuario."
+                           },
+                           "Codigo": {
+                              "type": "string",
+                              "description": "Codigo de verificación de segundo factor de autenticación (requerido solo si el usuario está realizando un inicio de sesion desde un nuevo dispositivo )."
+                           }
+                        },
+                        "required": [
+                           "email",
+                           "password"
+                        ]
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Autenticación exitosa",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "integer",
+                                 "example": 19
+                              },
+                              "name": {
+                                 "type": "string",
+                                 "example": "Nombre de usuario"
+                              },
+                              "terms_of_use": {
+                                 "type": "integer",
+                                 "example": 1
+                              },
+                              "company": {
+                                 "type": "string",
+                                 "example": "Tellink"
+                              },
+                              "date": {
+                                 "type": "string",
+                                 "format": "date-time",
+                                 "example": "2024-07-18T12:47:41"
+                              },
+                              "last_ip": {
+                                 "type": "string",
+                                 "example": "14.155.204.106"
+                              },
+                              "token": {
+                                 "type": "string",
+                                 "example": "eyJhbGciO5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNzIxNjQ3NDQ0LCJleHAiOjE3MjE2NzYyNDQsImRhdGEiOnsiZW1haWwiOiJndWlsbGVybW8ubW9uZ3VpbGxvdEB0ZWxsaW5rc2lzdGVtYXMuY29tIiwiaWQiOjM3LCJuYW1lIjoiR3Wf4KoUwIrx4t9Y"
+                              },
+                              "contracts": {
+                                 "type": "array",
+                                 "description": "Array de contratos asociados al usuario. Incluye detalles sobre cada contrato.",
+                                 "items": {
+                                    "type": "object",
+                                    "properties": {
+                                       "id": {
+                                          "type": "integer",
+                                          "example": 5
+                                       },
+                                       "name": {
+                                          "type": "string",
+                                          "example": "Ejemplo1"
+                                       },
+                                       "permissions": {
+                                          "type": "string",
+                                          "example": "administrator"
+                                       },
+                                       "type": {
+                                          "type": "string",
+                                          "example": "P2P/CM"
+                                       },
+                                       "subcontract_id": {
+                                          "type": "string",
+                                          "example": ",,"
+                                       },
+                                       "boss": {
+                                          "type": "integer",
+                                          "example": 0
+                                       },
+                                       "operator": {
+                                          "type": "integer",
+                                          "example": 0
+                                       },
+                                       "person_in_charge": {
+                                          "type": "integer",
+                                          "example": 0
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Fallo de autenticación",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "code": {
+                                 "type": "integer",
+                                 "example": 401
+                              },
+                              "name": {
+                                 "type": "string",
+                                 "example": "Authentication Fail"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Error interno del servidor o error en el usuario",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "error": {
+                                 "type": "string",
+                                 "example": "FATAL ERROR"
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "components": {},
+   "tags": []
+}
